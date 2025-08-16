@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Magical Wiki ✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #ffeaff, #ffd6e8);
+      font-family: 'Nunito', sans-serif;
+      color: #444;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #ffb6e6;
+      padding: 20px;
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 2em;
+      color: white;
+      text-shadow: 0 0 8px #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* 📖 Sidebar Navigation */
+    nav {
+      width: 220px;
+      background: #ffeaf7;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      display: block;
+      margin: 10px 0;
+      text-decoration: none;
+      color: #d63384;
+      font-weight: bold;
+    }
+
+    main {
+      margin-left: 240px;
+      padding: 20px;
+      max-width: 800px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(255,182,230,0.5);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    /* 🌥️ Floating Clouds */
+    .cloud {
+      position: absolute;
+      top: 20%;
+      width: 150px;
+      opacity: 0.7;
+      animation: floatClouds 60s linear infinite;
+      z-index: 0;
+    }
+    .cloud:nth-child(2) {
+      top: 40%;
+      width: 200px;
+      animation-duration: 90s;
+    }
+    @keyframes floatClouds {
+      from { left: -200px; }
+      to { left: 100%; }
+    }
+
+    /* ✨ Falling sparkles */
+    .sparkle {
+      position: absolute;
+      font-size: 20px;
+      animation: fall 5s linear forwards;
+      opacity: 0.8;
+      z-index: 5;
+    }
+    @keyframes fall {
+      from { transform: translateY(-10vh) scale(1); opacity: 1; }
+      to { transform: translateY(110vh) scale(0.5); opacity: 0; }
+    }
+
+    /* 🎇 Click Stars */
+    .star {
+      position: absolute;
+      font-size: 18px;
+      animation: popStar 0.8s ease-out forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+    @keyframes popStar {
+      0% { transform: scale(0.2); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 1; }
+      100% { transform: scale(0.5); opacity: 0; }
+    }
+
+    /* 🎵 Music Button */
+    #music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff90c2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: transform 0.2s ease, background 0.3s;
+    }
+    #music-btn:hover {
+      transform: scale(1.1);
+      background: #ff72b0;
+    }
+    #music-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* 📱 Mobile Responsive */
+    @media (max-width: 768px) {
+      nav {
+        position: relative;
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        display: flex;
+        justify-content: center;
+      }
+      nav a {
+        margin: 0 10px;
+        display: inline-block;
+      }
+      main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌥️ Clouds -->
+  <img src="https://i.ibb.co/hBfMfT9/cloud.png" class="cloud">
+  <img src="https://i.ibb.co/hBfMfT9/cloud.png" class="cloud">
+
+  <header>Magical Character Wiki ✨</header>
+
+  <nav>
+    <a href="#char1">🌸 Character 1</a>
+    <a href="#char2">✨ Character 2</a>
+    <a href="#char3">🌙 Character 3</a>
+  </nav>
+
+  <main>
+    <div class="card" id="char1">
+      <h2>🌸 Sakura</h2>
+      <p>A sweet magical girl who spreads kindness and cherry blossoms wherever she goes.</p>
+    </div>
+    <div class="card" id="char2">
+      <h2>✨ Stella</h2>
+      <p>The star guardian who lights up the night sky and protects dreams.</p>
+    </div>
+    <div class="card" id="char3">
+      <h2>🌙 Luna</h2>
+      <p>A mysterious moon princess who guides travelers with her glowing lantern.</p>
+    </div>
+  </main>
+
+  <!-- 🎶 Music Player -->
+  <audio id="bgm" loop>
+    <!-- Replace with your own mp3 file -->
+    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Chillout_Stories/Komiku_-_12_-_A_Cozy_Morning.mp3" type="audio/mpeg">
+  </audio>
+  <button id="music-btn">🎵 Play Music</button>
+
+  <script>
+    // ✨ Random falling sparkles
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.textContent = Math.random() > 0.5 ? "✨" : "💖";
+      sparkle.style.left = Math.random() * 100 + "vw";
+      sparkle.style.top = "-5vh";
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 5000);
+    }
+    setInterval(createSparkle, 1200);
+
+    // 🎇 Click stars
+    document.addEventListener("click", (e) => {
+      for (let i = 0; i < 6; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.textContent = "🌟";
+        star.style.left = e.pageX + (Math.random() * 40 - 20) + "px";
+        star.style.top = e.pageY + (Math.random() * 40 - 20) + "px";
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 800);
+      }
+    });
+
+    // 🎵 Music controls
+    const bgm = document.getElementById("bgm");
+    const musicBtn = document.getElementById("music-btn");
+    let playing = false;
+
+    musicBtn.addEventListener("click", () => {
+      if (!playing) {
+        bgm.play();
+        musicBtn.textContent = "⏸ Pause Music";
+      } else {
+        bgm.pause();
+        musicBtn.textContent = "🎵 Play Music";
+      }
+      playing = !playing;
+    });
+  </script>
+</body>
+</html>
