@@ -12,6 +12,7 @@
       font-family: 'Nunito', sans-serif;
       color: #444;
       overflow-x: hidden;
+      position: relative;
     }
 
     header {
@@ -37,6 +38,7 @@
       left: 0;
       padding: 20px;
       box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 999;
     }
 
     nav a {
@@ -51,6 +53,8 @@
       margin-left: 240px;
       padding: 20px;
       max-width: 800px;
+      position: relative;
+      z-index: 10;
     }
 
     .card {
@@ -72,7 +76,7 @@
       width: 150px;
       opacity: 0.7;
       animation: floatClouds 60s linear infinite;
-      z-index: 0;
+      z-index: 1;
     }
     .cloud:nth-child(2) {
       top: 40%;
@@ -158,8 +162,8 @@
 <body>
 
   <!-- 🌥️ Clouds -->
-  <img src="https://i.ibb.co/hBfMfT9/cloud.png" class="cloud">
-  <img src="https://i.ibb.co/hBfMfT9/cloud.png" class="cloud">
+  <img src="https://i.ibb.co/hBfMfT9/cloud.png" class="cloud" alt="cloud">
+  <img src="https://i.ibb.co/hBfMfT9/cloud.png" class="cloud" alt="cloud">
 
   <header>Magical Character Wiki ✨</header>
 
@@ -185,8 +189,7 @@
   </main>
 
   <!-- 🎶 Music Player -->
-  <audio id="bgm" loop>
-    <!-- Replace with your own mp3 file -->
+  <audio id="bgm" loop preload="auto">
     <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Chillout_Stories/Komiku_-_12_-_A_Cozy_Morning.mp3" type="audio/mpeg">
   </audio>
   <button id="music-btn">🎵 Play Music</button>
@@ -224,7 +227,7 @@
 
     musicBtn.addEventListener("click", () => {
       if (!playing) {
-        bgm.play();
+        bgm.play().catch(err => console.log("Autoplay blocked:", err));
         musicBtn.textContent = "⏸ Pause Music";
       } else {
         bgm.pause();
